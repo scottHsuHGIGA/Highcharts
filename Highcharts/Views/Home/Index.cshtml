@@ -1,0 +1,29 @@
+﻿@model List<string>
+
+@{
+    foreach (var item in Model)
+    {
+        <div class="col-sm-6 m-b-10 JQ_col_ref" style="border-bottom: solid 1px #d9d9d9;">
+            <div class="PItemContainer" style="margin: 0 auto"></div>
+            <input class="Item" value="@item" hidden />
+        </div>
+    }
+}
+
+
+@section scripts{
+    <script src="~/Scripts/source/highcharts.js"></script>
+    <script>
+        DrawPValueChar();
+        //繪製P值圖
+        function DrawPValueChar() {
+            $('.PItemContainer').each(function (index) {
+                DrawPValue('.PItemContainer', index)
+            })
+        }
+        function DrawPValue(className, Index) {
+            var json = JSON.parse($('.PItemContainer').eq(Index).next('.Item').val());
+            $(className).eq(Index).highcharts(json);
+        }
+    </script>
+}
